@@ -17,7 +17,7 @@ management:
 eureka:
   server:
     wait-time-in-ms-when-sync-empty: 5 # 서버가 요청을 받기 전 대기할 초기 시간 (5ms, 운영 환경에선 삭제 필요)
-    enable-self-preservation: true
+    enable-self-preservation: false
   client:
     register-with-eureka: false
     fetch-registry: false
@@ -44,7 +44,7 @@ eureka:
     hostname: peer1
   server:
     wait-time-in-ms-when-sync-empty: 5 # 서버가 요청을 받기 전 대기할 초기 시간 (5ms, 운영 환경에선 삭제 필요)
-    enable-self-preservation: true
+    enable-self-preservation: false
   client:
     register-with-eureka: false
     fetch-registry: false
@@ -56,7 +56,7 @@ my-config.name: peer1 eureka
 server:
   port: 8763
 spring:
-  profiles: peer1
+  profiles: peer2
 
 management:
   endpoints:
@@ -69,10 +69,10 @@ management:
 
 eureka:
   instance:
-    hostname: peer1
+    hostname: peer2
   server:
     wait-time-in-ms-when-sync-empty: 5 # 서버가 요청을 받기 전 대기할 초기 시간 (5ms, 운영 환경에선 삭제 필요)
-    enable-self-preservation: true
+    enable-self-preservation: false
   client:
     register-with-eureka: false
     fetch-registry: false
