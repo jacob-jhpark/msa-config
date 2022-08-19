@@ -1,7 +1,7 @@
 my-config.name: default eureka
 
 server:
-  port: 8760
+  port: 8761
 spring:
   profiles: default
 
