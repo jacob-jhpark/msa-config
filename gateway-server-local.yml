@@ -28,8 +28,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*),/$\{segment}
-            - AuthorizationHeaderFilter
-            - name: UserFilter
+            - name: AuthorizationFilter
               args:
                 baseMessage: Spring Cloud Gateway UserFilter
                 preLogger: true
