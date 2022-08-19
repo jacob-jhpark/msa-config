@@ -10,13 +10,11 @@ spring:
     #database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: update #create ? ???? Data?? ?? ?. ?? ???? update ???? ???? none ?
-
-security:
-  oauth2:
-    client-id: auth_id
-    client_secret: auth_secret
-    jwt:
-      key-value: jwt_secret_key
+  security:
+    oauth2:
+      client:
+        clientId:
+        clientSecret:
 
 eureka:
   instance:
