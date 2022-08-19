@@ -1,31 +1,9 @@
-spring:
-  profiles: peer1
-  eureka:
-    instance:
-      hostname: peer1
-    client:
-      register-with-eureka: false # 유레카 서비스에 (자신을) 등록하지 않는다. (클러스터 모드가 아니므로)
-      fetch-registry: false # 레지스트리 정보를 로컬에 캐싱하지 않는다. (클러스터 모드가 아니므로)
-      serviceUrl:
-        defaultZone: http://peer2/eureka
+my-config.name: default eureka
 
----
+server:
+  port: 8760
 spring:
-  profiles: peer2
-  eureka:
-    instance:
-      hostname: peer2
-    client:
-      register-with-eureka: false # 유레카 서비스에 (자신을) 등록하지 않는다. (클러스터 모드가 아니므로)
-      fetch-registry: false # 레지스트리 정보를 로컬에 캐싱하지 않는다. (클러스터 모드가 아니므로)
-      serviceUrl:
-        defaultZone: http://peer1/eureka
-
----
-eureka:
-  server:
-    wait-time-in-ms-when-sync-empty: 5 # 서버가 요청을 받기 전 대기할 초기 시간 (5ms, 운영 환경에선 삭제 필요)
-    enable-self-preservation: true
+  profiles: default
 
 management:
   endpoints:
@@ -35,3 +13,72 @@ management:
   endpoint:
     shutdown:
       enabled: true
+
+eureka:
+  server:
+    wait-time-in-ms-when-sync-empty: 5 # 서버가 요청을 받기 전 대기할 초기 시간 (5ms, 운영 환경에선 삭제 필요)
+    enable-self-preservation: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+---
+
+my-config.name: peer1 eureka
+server:
+  port: 8762
+spring:
+  profiles: peer1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+
+eureka:
+  instance:
+    hostname: peer1
+  server:
+    wait-time-in-ms-when-sync-empty: 5 # 서버가 요청을 받기 전 대기할 초기 시간 (5ms, 운영 환경에선 삭제 필요)
+    enable-self-preservation: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://peer2:8763/eureka
+
+---
+my-config.name: peer1 eureka
+server:
+  port: 8763
+spring:
+  profiles: peer1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+
+eureka:
+  instance:
+    hostname: peer1
+  server:
+    wait-time-in-ms-when-sync-empty: 5 # 서버가 요청을 받기 전 대기할 초기 시간 (5ms, 운영 환경에선 삭제 필요)
+    enable-self-preservation: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://peer1:8762/eureka
+
+---
+
+
