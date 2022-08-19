@@ -20,6 +20,20 @@ spring:
                 baseMessage: Spring Cloud Gateway UserFilter
                 preLogger: true
                 postLogger: true
+        - id: user-service
+          uri: lb:USER-SERVICE
+          predicates:
+            - Path=/user/**
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user/(?<segment>.*),/$\{segment}
+            - AuthorizationHeaderFilter
+            - name: UserFilter
+              args:
+                baseMessage: Spring Cloud Gateway UserFilter
+                preLogger: true
+                postLogger: true
         - id: circuit-breaker-test
           uri: http://localhost:8082/
           predicates:
@@ -28,6 +42,16 @@ spring:
             - name: CafeFilter
               args:
                 baseMessage: Spring Cloud Gateway CafeFilter
+                preLogger: true
+                postLogger: true
+        - id: jwt-service
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/jwt/**
+          filters:
+            - name: JwtRequestFilter
+              args:
+                baseMessage: Spring Cloud Gateway JwtFilter
                 preLogger: true
                 postLogger: true
 eureka:
