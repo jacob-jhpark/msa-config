@@ -7,6 +7,10 @@ eureka:
     serviceUrl:
       defaultZone: http://127.0.0.1:8761/eureka
 
+spring:
+  application:
+    name: user-service
+
 resilience4j.circuitbreaker:
   configs:
     default:
