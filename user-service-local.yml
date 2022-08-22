@@ -1,0 +1,73 @@
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true # 서비스 이름 대신 IP 주소 등록
+  client:
+    register-with-eureka: true # 유레카 서버에 서비스 등록
+    fetch-registry: true # 레지스트리 정보를 로컬에 캐싱
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+spring:
+  application:
+    name: user-service
+
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/board?characterEncoding=utf8
+    driver-class-name: org.Mysql.Driver
+    username: root
+    password: Qkrwnsgh1!
+
+  jpa:
+    show-sql: true
+    #database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: update #create ? ???? Data?? ?? ?. ?? ???? update ???? ???? none ?
+
+  redis:
+    host: http://localhost
+    port: 6379
+
+token:
+  access-expired-time: 3600000
+  refresh-expired-time: 604800000
+  secret: $2a$10$q42lY7Y18xqrFt1qbODZIO4OMTeOxnrCe7tF3n9bazJinVE7VH5Pi
+  refresh-token-name: refresh-token
+  access-token-name: access-token
+
+#resilience4j.circuitbreaker:
+#  configs:
+#    default:
+#      slidingWindowSize: 100
+#      permittedNumberOfCallsInHalfOpenState: 10
+#      waitDurationInOpenState: 10000
+#      failureRateThreshold: 60
+#      evenConsumerBufferSize: 10
+#      registerHealthIndicator: true
+#    someShared:
+#      slidingWindowSize: 50
+#      permittedNumberOfCallsInHalfOpenState: 10
+#  instance:
+#    backendA:
+#      baseConfig: default
+#      waitDurationInOpenState: 5000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled:true

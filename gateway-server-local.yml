@@ -21,7 +21,14 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user/**
+            - Path=/user/login
+            - Method=POST
+          filters:
+            - RewritePath=/user/(?<segment>.*),/$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/logout
             - Method=POST
           filters:
             - RewritePath=/user/(?<segment>.*),/$\{segment}
@@ -31,7 +38,6 @@ spring:
             - Path=/user/**
           filters:
             - AuthorizationFilter
-            - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*),/$\{segment}
 eureka:
   instance:
