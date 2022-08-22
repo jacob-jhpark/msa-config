@@ -1,58 +1,38 @@
 spring:
   application:
     name: gateway-server
+
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
+
   cloud:
     gateway:
       default-filters:
         - name: GlobalFilter
           args:
-            baseMessage: Spring Cloud Gateway GlobalFilter
+            baseMessage: Spring Cloud Gateway Global Filter
             preLogger: true
             postLogger: true
       routes:
         - id: user-service
-          uri: http://localhost:8081/
+          uri: lb://USER-SERVICE
           predicates:
             - Path=/user/**
+            - Method=POST
           filters:
-            - name: UserFilter
-              args:
-                baseMessage: Spring Cloud Gateway UserFilter
-                preLogger: true
-                postLogger: true
+            - RewritePath=/user/(?<segment>.*),/$\{segment}
         - id: user-service
-          uri: http://localhost:8081/
+          uri: lb://USER-SERVICE
           predicates:
             - Path=/user/**
-            - Method=GET
           filters:
+            - AuthorizationFilter
             - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*),/$\{segment}
-            - name: AuthorizationFilter
-              args:
-                baseMessage: Spring Cloud Gateway UserFilter
-                preLogger: true
-                postLogger: true
-        - id: circuit-breaker-test
-          uri: http://localhost:8082/
-          predicates:
-            - Path=/cafe/**
-          filters:
-            - name: CafeFilter
-              args:
-                baseMessage: Spring Cloud Gateway CafeFilter
-                preLogger: true
-                postLogger: true
-        - id: jwt-service
-          uri: http://localhost:8083/
-          predicates:
-            - Path=/jwt/**
-          filters:
-            - name: JwtRequestFilter
-              args:
-                baseMessage: Spring Cloud Gateway JwtFilter
-                preLogger: true
-                postLogger: true
 eureka:
   instance:
     prefer-ip-address: true # 서비스 이름 대신 IP 주소 등록
@@ -61,6 +41,13 @@ eureka:
     fetch-registry: true # 레지스트리 정보를 로컬에 캐싱
     serviceUrl:
       defaultZone: http://127.0.0.1:8761/eureka
+
+token:
+  access-expired-time: 3600000
+  refresh-expired-time: 604800000
+  secret: $2a$10$q42lY7Y18xqrFt1qbODZIO4OMTeOxnrCe7tF3n9bazJinVE7VH5Pi
+  refresh-token-name: refresh-token
+  access-token-name: access-token
 
 management:
   endpoints:
