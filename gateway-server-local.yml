@@ -3,11 +3,14 @@ spring:
     name: gateway-server
 
   zipkin:
-    base-url: http://127.0.0.1:9411
     enabled: true
+    base-url: http://127.0.0.1:9411
   sleuth:
+    enabled: true
     sampler:
       probability: 1.0
+    web:
+      skip-pattern: /health/checker
 
   cloud:
     gateway:
