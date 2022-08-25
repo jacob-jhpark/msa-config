@@ -18,6 +18,8 @@ spring:
     enabled: true
     sampler:
       probability: 1.0
+    web:
+      skip-pattern: /health/checker
 
   datasource:
     url: jdbc:mysql://localhost:3306/board?characterEncoding=utf8
