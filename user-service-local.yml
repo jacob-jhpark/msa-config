@@ -80,6 +80,7 @@ management:
         include:
           - "refresh"
           - "bus-refresh"
+          - "test"
   endpoint:
     shutdown:
       enabled: true
