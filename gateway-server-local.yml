@@ -12,6 +12,9 @@ spring:
     web:
       skip-pattern: /health/checker
 
+  kafka:
+    bootstrap-servers: localhost:9092
+
   cloud:
     gateway:
       default-filters:

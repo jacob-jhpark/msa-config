@@ -11,6 +11,10 @@ eureka:
 spring:
   application:
     name: user-service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
   cloud:
     bus:
       enabled: true

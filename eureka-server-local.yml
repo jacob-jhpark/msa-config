@@ -4,6 +4,17 @@ server:
   port: 8761
 spring:
   profiles: default
+  cloud:
+    bus:
+      # Bus로 설정변경 새로고침 활성화
+      enabled: true
+      # bus-refresh EndPoint 활성화 호출시 전체 Config Bus Client 들에게 메세지 전송
+      refresh:
+        enabled: true
+      env:
+        enabled: true
+  kafka:
+    bootstrap-servers: localhost:9092
 
 management:
   endpoints:
