@@ -11,6 +11,13 @@ eureka:
 spring:
   application:
     name: user-service
+  cloud:
+    bus:
+      enabled: true
+      refresh:
+        enabled: true
+      env:
+        enabled: true
 
   zipkin:
     enabled: true
@@ -66,7 +73,9 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include:
+          - "refresh"
+          - "bus-refresh"
   endpoint:
     shutdown:
       enabled: true

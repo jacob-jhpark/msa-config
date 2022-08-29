@@ -49,6 +49,15 @@ spring:
           filters:
             - AuthorizationFilter
             - RewritePath=/user/(?<segment>.*),/$\{segment}
+    bus:
+      # Bus로 설정변경 새로고침 활성화
+      enabled: true
+      # bus-refresh EndPoint 활성화 호출시 전체 Config Bus Client 들에게 메세지 전송
+      refresh:
+        enabled: true
+      env:
+        enabled: true
+
 eureka:
   instance:
     prefer-ip-address: true # 서비스 이름 대신 IP 주소 등록
@@ -69,7 +78,9 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include:
+          - "refresh"
+          - "bus-refresh"
   endpoint:
     shutdown:
       enabled: true
