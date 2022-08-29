@@ -85,6 +85,3 @@ management:
       enabled: true
     health:
       show-details: always
-  health:
-    circuitbreakers:
-      enabled:true
