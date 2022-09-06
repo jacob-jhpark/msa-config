@@ -32,18 +32,16 @@ spring:
             preLogger: true
             postLogger: true
       routes:
+        - id: gateway-server
+          uri: lb://GATEWAY-SERVER
+          predicates:
+            - Path=/login
+            - Method=GET
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user/login
             - Method=POST
-          filters:
-            - RewritePath=/user/(?<segment>.*),/$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user/login
-            - Method=GET
           filters:
             - RewritePath=/user/(?<segment>.*),/$\{segment}
         - id: user-service
