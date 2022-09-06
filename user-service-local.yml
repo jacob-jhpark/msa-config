@@ -11,6 +11,14 @@ eureka:
 spring:
   application:
     name: user-service
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    encoding: UTF-8
+    cache: false
+  mvc:
+    static-path-pattern: /static/**
+    log-resolved-exception: true
 
   kafka:
     bootstrap-servers: localhost:9092
