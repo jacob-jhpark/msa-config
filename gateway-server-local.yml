@@ -37,6 +37,7 @@ spring:
           predicates:
             - Path=/user/login
             - Method=POST
+            - Method=GET
           filters:
             - RewritePath=/user/(?<segment>.*),/$\{segment}
         - id: user-service
